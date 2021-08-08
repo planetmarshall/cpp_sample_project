@@ -13,4 +13,3 @@ include(CTest)
 include(Catch)
 
 catch_discover_tests(test_euler)
-

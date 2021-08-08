@@ -22,6 +22,6 @@ class CppSampleProjectConan(ConanFile):
       self.build_requires("ninja/1.10.2")
 
    def build(self):
-      cmake = CMake(self, generator="Ninja")
+      cmake = CMake(self)
       cmake.configure()
       cmake.build()
