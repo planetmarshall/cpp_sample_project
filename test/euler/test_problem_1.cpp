@@ -1,13 +1,15 @@
 #include <euler/euler.h>
 
-#include <gtest/gtest.h>
+#include <catch2/catch.hpp>
 
-TEST(TestProblem1, ListOfMultiplesBelow10) {
+using Catch::Matchers::Equals;
+
+TEST_CASE("List Multiples of 3 and 5 Below 10", "[Project Euler Problem 1]") {
   auto multiples = euler::multiples_of_three_or_five(10);
-  ASSERT_EQ((std::vector<int>{3, 5, 6, 9}), multiples);
+  REQUIRE_THAT(multiples, Equals(std::vector<int>{3, 5, 6, 9}));
 }
 
-TEST(TestProblem1, SumOfMultiplesBelow10) {
+TEST_CASE("Sum Multiples of 3 and 5 Below 10", "[Project Euler Problem 1]") {
   auto sum = euler::sum_multiples_of_three_or_five(10);
-  ASSERT_EQ(23, sum);
+  REQUIRE(sum == 23);
 }

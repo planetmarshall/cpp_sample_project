@@ -2,8 +2,8 @@ cmake_minimum_required(VERSION 3.10)
 
 project(SampleProject)
 include(${CMAKE_BINARY_DIR}/conanbuildinfo.cmake)
-set(CONAN_CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
 conan_basic_setup()
+list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
 
 if (MSVC)
     add_compile_options(/W4 /permissive-)
@@ -12,7 +12,7 @@ else()
 endif()
 
 enable_testing()
-find_package(GTest)
+find_package(Catch2 REQUIRED)
 
 add_subdirectory(src)
 add_subdirectory(app)

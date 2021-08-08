@@ -1,16 +1,16 @@
 include(GoogleTest)
-add_executable(test_core 
+add_executable(test_euler
     main.cpp
-        test_problem_1.cpp)
+    test_problem_1.cpp)
 
-target_link_libraries(test_core
-    PUBLIC
-    GTest::GTest
+target_link_libraries(test_euler
+    PRIVATE
+    Catch2::Catch2
     Euler::Euler
 )
 
-add_test(
-    NAME test_euler
-    COMMAND test_euler
-    )
+include(CTest)
+include(Catch)
+
+catch_discover_tests(test_euler)
 

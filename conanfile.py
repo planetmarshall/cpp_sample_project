@@ -18,7 +18,7 @@ class CppSampleProjectConan(ConanFile):
          del self.options.fPIC
 
    def build_requirements(self):
-      self.build_requires("gtest/1.11.0")
+      self.build_requires("catch2/2.13.6")
       self.build_requires("ninja/1.10.2")
 
    def build(self):
