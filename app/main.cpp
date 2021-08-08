@@ -1,8 +1,11 @@
-#include <sample/version.hpp>
+#include <euler/euler.h>
 
 #include <iostream>
 
-int main(int argc, char* argv[]) {
-    std::cout << "Sample version: " << sample::version() << std::endl;
+int main() {
+    std::cout << "Sum of multiples of 3 and 5 up to 42 is "
+      << euler::sum_multiples_of_three_or_five(42)
+      << std::endl;
+
     return 0;
 }

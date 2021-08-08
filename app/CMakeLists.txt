@@ -1,10 +1,5 @@
-add_executable(sample
-    main.cpp)
+add_executable(sample main.cpp)
 
-target_link_libraries(sample
-    Sample::Core
-    )
+target_link_libraries(sample PRIVATE Euler::Euler)
 
-install(TARGETS sample
-        RUNTIME DESTINATION bin
-        )
+install(TARGETS sample RUNTIME DESTINATION bin)

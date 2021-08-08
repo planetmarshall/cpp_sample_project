@@ -1,19 +1,18 @@
 
-add_library(
-    sample_core
-    core/version.cpp
+add_library(euler euler/problem_1.cpp
 )
 
-add_library(Sample::Core ALIAS sample_core)
+add_library(Euler::Euler ALIAS euler)
 
 target_include_directories(
-    sample_core
+    euler
     PUBLIC
-    ${CMAKE_SOURCE_DIR}/include
+    $<BUILD_INTERFACE:${CMAKE_SOURCE_DIR}/include>
+    $<INSTALL_INTERFACE:include>
 )
 
 install(
-        TARGETS sample_core
+        TARGETS euler
         EXPORT SampleTargets
         LIBRARY DESTINATION lib
         ARCHIVE DESTINATION lib
@@ -24,6 +23,6 @@ install(
 install(
         DIRECTORY ${CMAKE_SOURCE_DIR}/include/sample
         DESTINATION include
-        FILES_MATCHING PATTERN *.hpp
+        FILES_MATCHING PATTERN *.h
 )
 
