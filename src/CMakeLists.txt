@@ -1,6 +1,5 @@
-
-add_library(euler euler/problem_1.cpp
-)
+add_library(euler euler/problem_1.cpp )
+target_compile_features(euler PUBLIC cxx_std_20)
 
 add_library(Euler::Euler ALIAS euler)
 
