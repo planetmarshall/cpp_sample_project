@@ -1,4 +1,4 @@
-#include <euler/euler.h>
+#include <euler/euler.hpp>
 
 #include <range/v3/view/iota.hpp>
 #include <range/v3/view/filter.hpp>
