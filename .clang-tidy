@@ -1,5 +1,11 @@
 ---
-Checks:          'clang-diagnostic-*,clang-analyzer-*,*'
+Checks: '
+  clang-diagnostic-*,
+  clang-analyzer-*,
+  *,
+  -llvmlibc-*,
+  -fuchsia-*,
+  -modernize-use-trailing-return-type'
 WarningsAsErrors: ''
 HeaderFilterRegex: ''
 AnalyzeTemporaryDtors: false
@@ -159,7 +165,7 @@ CheckOptions:
   - key:             cppcoreguidelines-avoid-magic-numbers.IgnoredFloatingPointValues
     value:           '1.0;100.0;'
   - key:             cppcoreguidelines-avoid-magic-numbers.IgnoredIntegerValues
-    value:           '1;2;3;4;'
+    value:           '1;2;3;4;42;'
   - key:             cppcoreguidelines-explicit-virtual-functions.AllowOverrideAndFinal
     value:           'false'
   - key:             cppcoreguidelines-explicit-virtual-functions.FinalSpelling
@@ -503,7 +509,7 @@ CheckOptions:
   - key:             readability-magic-numbers.IgnoredFloatingPointValues
     value:           '1.0;100.0;'
   - key:             readability-magic-numbers.IgnoredIntegerValues
-    value:           '1;2;3;4;'
+    value:           '1;2;3;4;42;100'
   - key:             readability-qualified-auto.AddConstToQualified
     value:           'true'
   - key:             readability-redundant-declaration.IgnoreMacros
