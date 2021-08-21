@@ -1,4 +1,4 @@
-#include <euler/euler.h>
+#include <euler/euler.hpp>
 
 #include <catch2/catch.hpp>
 
