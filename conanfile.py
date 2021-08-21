@@ -17,6 +17,9 @@ class CppSampleProjectConan(ConanFile):
       if self.settings.os == "Windows":
          del self.options.fPIC
 
+   def requirements(self):
+      self.requires("range-v3/0.11.0")
+
    def build_requirements(self):
       self.build_requires("catch2/2.13.6")
       self.build_requires("ninja/1.10.2")
