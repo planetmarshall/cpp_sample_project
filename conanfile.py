@@ -22,7 +22,8 @@ class CppSampleProjectConan(ConanFile):
 
    def build_requirements(self):
       self.build_requires("catch2/2.13.6")
-      self.build_requires("ninja/1.10.2")
+      if self.settings.get_safe("compiler.toolset") is None:
+         self.build_requires("ninja/1.10.2")
 
    def build(self):
       cmake = CMake(self)
