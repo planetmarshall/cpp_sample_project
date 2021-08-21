@@ -19,6 +19,7 @@ class CppSampleProjectConan(ConanFile):
 
    def requirements(self):
       self.requires("range-v3/0.11.0")
+      self.requires("boost/1.76.0")
 
    def build_requirements(self):
       self.build_requires("catch2/2.13.6")

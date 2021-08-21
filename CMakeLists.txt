@@ -10,13 +10,14 @@ if (MSVC)
     add_compile_options(/W4 /permissive-)
 else()
     add_compile_options(-Wall -Wpedantic -Wextra)
-    set(SAMPLE_CLANG_COMPILER_OPTIONS "-Wconversion -Wconditional-uninitialized")
     add_compile_options("$<$<CXX_COMPILER_ID:Clang,AppleClang>:-Wconversion;-Wconditional-uninitialized>")
 endif()
 
+find_package(Boost REQUIRED COMPONENTS program_options)
+find_package(range-v3 REQUIRED)
+
 enable_testing()
 find_package(Catch2 REQUIRED)
-find_package(range-v3 REQUIRED)
 
 add_subdirectory(src)
 add_subdirectory(app)
