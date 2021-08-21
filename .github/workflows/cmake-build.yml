@@ -99,11 +99,13 @@ jobs:
             --profile .github/workflows/conan/profiles/apple-clang12 \
             --install-folder build \
             -o shared=${SAMPLE_SHARED} \
-            --build missing
+            --build missing \
+            --generator virtualrunenv
       - name: build with cmake
         run: |
           conan build . --build-folder build
       - name: run tests
         run: |
           cd build
+          source activate_run.sh
           ctest --extra-verbose
