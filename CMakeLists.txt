@@ -9,7 +9,7 @@ list(APPEND CMAKE_MODULE_PATH ${CMAKE_BINARY_DIR})
 if (MSVC)
     add_compile_options(/W4 /permissive-)
 else()
-    add_compile_options(-Wall -Wpedantic -Wextra -Wconversion)
+    add_compile_options(-Wall -Wpedantic -Wextra -Wconversion -Wconditional-uninitialized)
 endif()
 
 enable_testing()
