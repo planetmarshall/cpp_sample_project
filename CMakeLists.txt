@@ -14,6 +14,7 @@ endif()
 
 enable_testing()
 find_package(Catch2 REQUIRED)
+find_package(range-v3 REQUIRED)
 
 add_subdirectory(src)
 add_subdirectory(app)
