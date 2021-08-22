@@ -30,17 +30,35 @@ jobs:
         run: |
           bash .github/workflows/set_env_vars.sh \
             ${{ matrix.shared }}
+      - name: Create conan cache keys
+        run: |
+          CONAN_ARGS="
+            --profile .github/workflows/conan/profiles/${{ matrix.profile }} \
+            -o shared=${SAMPLE_SHARED} \
+            --build missing
+          "
+          conan lock create conanfile.py ${CONAN_ARGS} --base --lockfile-out base.lock
+          conan lock create conanfile.py ${CONAN_ARGS}
+      - name: Get conan cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.conan/data
+            !~/.conan/data/**/conan_sources.tgz
+          key: conan-${{ matrix.profile }}-${{ hashfiles('base.lock') }}-${{ hashFiles('conan.lock') }}
+          restore-keys: |
+              conan-${{ matrix.profile }}-${{ hashfiles('base.lock') }}
+              conan-${{ matrix.profile }}
       - name: Install conan dependencies
         run: |
           conan install . \
-            --profile .github/workflows/conan/profiles/${{ matrix.profile }} \
             --install-folder build \
-            -o shared=${SAMPLE_SHARED} \
+            --lockfile conan.lock \
             --build missing
       - name: build with cmake
         run: |
           conan build . --build-folder build
-      - name: run tests
+      - name: Run tests
         run: |
           cd build
           ctest --extra-verbose
@@ -57,21 +75,40 @@ jobs:
           bash .github/workflows/set_env_vars.sh \
             ${{ matrix.shared }}
         shell: bash
-      - name: Install and configure conan
+      - name: Create conan cache keys
         run: |
           python -m pip install --upgrade pip
           pip install --upgrade conan
-          conan install . \
+          CONAN_ARGS="
             --profile .github/workflows/conan/profiles/${{ matrix.profile }} \
-            --install-folder build \
             -o shared=${SAMPLE_SHARED} \
+            --build missing
+          "
+          conan lock create conanfile.py ${CONAN_ARGS} --base --lockfile-out base.lock
+          conan lock create conanfile.py ${CONAN_ARGS}
+        shell: bash
+      - name: Get conan cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.conan/data
+            !~/.conan/data/**/conan_sources.tgz
+          key: conan-${{ matrix.profile }}-${{ hashfiles('base.lock') }}-${{ hashFiles('conan.lock') }}
+          restore-keys: |
+            conan-${{ matrix.profile }}-${{ hashfiles('base.lock') }}
+            conan-${{ matrix.profile }}
+      - name: Install conan dependencies
+        run: |
+          conan install . \
+            --install-folder build \
+            --lockfile conan.lock \
             --build missing
         shell: bash
       - name: build with cmake
         run: |
           conan build . --build-folder build
         shell: bash
-      - name: run tests
+      - name: Run tests
         run: |
           cd build
           ctest --extra-verbose
@@ -92,20 +129,38 @@ jobs:
             ${{ matrix.shared }}
           echo "CC=$(brew --prefix llvm)/bin/clang" >> $GITHUB_ENV
           echo "CXX=$(brew --prefix llvm)/bin/clang++" >> $GITHUB_ENV
-      - name: Install and configure conan
+      - name: Create conan cache keys
         run: |
           python -m pip install --upgrade pip
           pip install --upgrade conan
-          conan install . \
+          CONAN_ARGS="
             --profile .github/workflows/conan/profiles/apple-clang12 \
-            --install-folder build \
             -o shared=${SAMPLE_SHARED} \
+            --build missing
+          "
+          conan lock create conanfile.py ${CONAN_ARGS} --base --lockfile-out base.lock
+          conan lock create conanfile.py ${CONAN_ARGS}
+      - name: Get conan cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.conan/data
+            !~/.conan/data/**/conan_sources.tgz
+          key: conan-${{ matrix.profile }}-${{ hashfiles('base.lock') }}-${{ hashFiles('conan.lock') }}
+          restore-keys: |
+            conan-${{ matrix.profile }}-${{ hashfiles('base.lock') }}
+            conan-${{ matrix.profile }}
+      - name: Install conan dependencies
+        run: |
+          conan install . \
+            --install-folder build \
+            --lockfile conan.lock \
             --build missing \
             --generator virtualrunenv
       - name: build with cmake
         run: |
           conan build . --build-folder build
-      - name: run tests
+      - name: Run tests
         run: |
           cd build
           source activate_run.sh
