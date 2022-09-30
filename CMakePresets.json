@@ -1,0 +1,41 @@
+{
+  "version": 3,
+  "configurePresets": [
+    {
+      "name": "default-base",
+      "generator": "Ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/build/${presetName}/generators/conan_toolchain.cmake"
+      }
+    },
+    {
+      "name": "linux-clang",
+      "inherits": "default-base",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang",
+        "CMAKE_CXX_COMPILER": "clang++"
+      },
+      "hidden": true,
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Linux"
+      }
+    },
+    {
+      "name": "release-base",
+      "hidden": true,
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
+      "name": "linux-clang-release",
+      "displayName": "Linux Clang Release",
+      "description": "Release build using Clang",
+      "inherits": [ "linux-clang", "release-base" ]
+    }
+  ]
+}
