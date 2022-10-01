@@ -30,7 +30,7 @@ jobs:
         run: |
           PRESET=${{ runner.os }}-${{ matrix.profile }}-${{ matrix.config }}
           SHARED=$([[ "${{ matrix.shared }}" == "shared" ]] && echo "True" || echo "False")
-          echo "PRESET=${PRESET}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV
+          echo "PRESET=$(echo ${PRESET} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
           echo "BUILD_SHARED=${SHARED}" >> $GITHUB_ENV
 
       - name: Create conan cache keys
