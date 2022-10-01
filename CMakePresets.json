@@ -14,9 +14,7 @@
       "name": "macos-clang",
       "inherits": "default-base",
       "cacheVariables": {
-        "CMAKE_SYSTEM_PROCESSOR": "armv8",
-        "CMAKE_C_COMPILER": "clang",
-        "CMAKE_CXX_COMPILER": "clang++"
+        "CMAKE_SYSTEM_PROCESSOR": "armv8"
       },
       "hidden": true,
       "condition": {

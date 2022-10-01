@@ -3,7 +3,7 @@ import os
 from conan import ConanFile
 from conan.tools.cmake import CMake
 from conan.tools.layout import cmake_layout
-from conan.tools import microsoft
+from conan.tools import microsoft, apple
 
 
 class CppSampleProjectConan(ConanFile):
@@ -75,6 +75,8 @@ class CppSampleProjectConan(ConanFile):
     def imports(self):
         if microsoft.is_msvc(self):
             self.copy("*.dll", src="bin")
+        if apple.is_apple_os(self):
+            self.copy("*.dylib", src="lib")
 
     def config_options(self):
         if self.settings.os == "Windows":
