@@ -64,6 +64,11 @@ class CppSampleProjectConan(ConanFile):
         build_folder_name = f"{str(self.settings.os)}-{compiler}-{str(self.settings.build_type)}"
         build_folder_path = os.path.join("build", build_folder_name.lower())
         cmake_layout(self, build_folder=build_folder_path)
+        self.folders.imports = os.path.join(build_folder_path, "bin")
+
+    def imports(self):
+        if microsoft.is_msvc(self):
+            self.copy("*.dll", src="bin")
 
     def config_options(self):
         if self.settings.os == "Windows":
