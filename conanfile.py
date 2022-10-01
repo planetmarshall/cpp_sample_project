@@ -59,10 +59,16 @@ class CppSampleProjectConan(ConanFile):
             feature, disable = enable_feature(opt, val)
             setattr(self.options["boost"], feature, disable)
 
+    @property
+    def _build_folder_name(self):
+        if self.settings.os == "Macos":
+            return f"{str(self.settings.os)}-clang-{str(self.settings.build_type)}"
+        if microsoft.is_msvc(self):
+            return f"{str(self.settings.os)}-msvc-{str(self.settings.build_type)}"
+        return f"{str(self.settings.os)}-{str(self.settings.compiler)}-{str(self.settings.build_type)}"
+
     def layout(self):
-        compiler = "msvc" if microsoft.is_msvc(self) else str(self.settings.compiler)
-        build_folder_name = f"{str(self.settings.os)}-{compiler}-{str(self.settings.build_type)}"
-        build_folder_path = os.path.join("build", build_folder_name.lower())
+        build_folder_path = os.path.join("build", self._build_folder_name.lower())
         cmake_layout(self, build_folder=build_folder_path)
         self.folders.imports = os.path.join(build_folder_path, "bin")
 

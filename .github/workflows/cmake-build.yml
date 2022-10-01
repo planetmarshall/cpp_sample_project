@@ -32,6 +32,9 @@ jobs:
           - name: linux-clang
             os: ubuntu-22.04
             profile: clang
+          - name: macos-arm64-clang
+            os: macos-12
+            profile: macos-arm64-clang
 
     runs-on: ${{ matrix.os }}
 
@@ -54,6 +57,9 @@ jobs:
       - name: Set environment variables
         run: |
           PRESET=${{ runner.os }}-${{ matrix.profile }}-${{ matrix.config }}
+          if [[ "${{ runner.os }}" == "macOS" ]]; then
+            PRESET=${{ matrix.profile }}-${{ matrix.config }}
+          fi
           SHARED=$([[ "${{ matrix.shared }}" == "shared" ]] && echo "True" || echo "False")
           echo "PRESET=$(echo ${PRESET} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
           echo "BUILD_SHARED=${SHARED}" >> $GITHUB_ENV
