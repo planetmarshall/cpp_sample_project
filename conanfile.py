@@ -62,7 +62,7 @@ class CppSampleProjectConan(ConanFile):
     @property
     def _build_folder_name(self):
         if self.settings.os == "Macos":
-            return f"{str(self.settings.os)}-clang-{str(self.settings.build_type)}"
+            return f"{str(self.settings.os)}-{str(self.settings.arch)}-clang-{str(self.settings.build_type)}"
         if microsoft.is_msvc(self):
             return f"{str(self.settings.os)}-msvc-{str(self.settings.build_type)}"
         return f"{str(self.settings.os)}-{str(self.settings.compiler)}-{str(self.settings.build_type)}"

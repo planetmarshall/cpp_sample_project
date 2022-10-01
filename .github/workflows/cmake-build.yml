@@ -18,7 +18,7 @@ jobs:
           windows-msvc,
           linux-gcc,
           linux-clang,
-          macos-arm64-clang
+          macos-armv8-clang
         ]
         config: [Release, Debug]
         shared: [shared, static]
@@ -32,9 +32,9 @@ jobs:
           - name: linux-clang
             os: ubuntu-22.04
             profile: clang
-          - name: macos-arm64-clang
+          - name: macos-armv8-clang
             os: macos-12
-            profile: macos-arm64-clang
+            profile: macos-armv8-clang
 
     runs-on: ${{ matrix.os }}
 

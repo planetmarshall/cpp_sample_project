@@ -145,7 +145,7 @@
       ]
     },
     {
-      "name": "macos-arm64-clang-release",
+      "name": "macos-armv8-clang-release",
       "displayName": "MacOS Arm64 Clang Release",
       "description": "Release build using Apple Clang for Apple Silicon",
       "inherits": [
@@ -154,9 +154,9 @@
       ]
     },
     {
-      "name": "macos-arm64-clang-debug",
+      "name": "macos-armv8-clang-debug",
       "displayName": "MacOS Arm64 Clang Debug",
-      "description": "Release build using Apple Clang for Apple Silicon",
+      "description": "Debug build using Apple Clang for Apple Silicon",
       "inherits": [
         "macos-clang",
         "debug-base"
