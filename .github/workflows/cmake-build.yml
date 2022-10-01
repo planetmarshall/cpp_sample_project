@@ -14,12 +14,23 @@ jobs:
   build:
     strategy:
       matrix:
-        include:
-          - os: windows-2022
-            profile: msvc
+        name: [
+          windows-msvc,
+          linux-gcc,
+          linux-clang
+        ]
         config: [Release, Debug]
         shared: [shared, static]
-
+        include:
+          - name: windows-msvc
+            os: windows-2022
+            profile: msvc
+          - name: linux-gcc
+            os: ubuntu-22.04
+            profile: gcc
+          - name: linux-clang
+            os: ubuntu-22.04
+            profile: clang
 
 
     runs-on: ${{ matrix.os }}
