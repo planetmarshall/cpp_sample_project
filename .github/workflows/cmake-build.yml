@@ -10,14 +10,25 @@ jobs:
   linux-build:
     strategy:
       matrix:
+        os: [windows-latest, ubuntu-latest]
         shared: [shared, static]
         config: [Debug, Release]
-        profile: [gcc, clang]
+        profile: [gcc, clang, msvc]
+        exclude:
+          - os: windows-latest
+            profile: gcc
+          - os: windows-latest
+            profile: clang
+          - os: ubuntu-latest
+            profile: msvc
 
-    runs-on: ubuntu-22.04
+    runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v2
+      - uses: ilammy/msvc-dev-cmd@v1
+        if: runner.os == 'Windows'
+
       - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
