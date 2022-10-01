@@ -39,6 +39,31 @@
       }
     },
     {
+      "name": "default-msvc",
+      "inherits": "default-base",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "cl.exe",
+        "CMAKE_CXX_COMPILER": "cl.exe"
+      },
+      "architecture": {
+        "value": "x64",
+        "strategy": "external"
+      },
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Windows"
+      },
+      "hidden": true,
+      "vendor": {
+        "microsoft.com/VisualStudioSettings/CMake/1.0": {
+          "hostOS": [
+            "Windows"
+          ]
+        }
+      }
+    },
+    {
       "name": "release-base",
       "hidden": true,
       "cacheVariables": {
@@ -56,25 +81,55 @@
       "name": "linux-clang-release",
       "displayName": "Linux Clang Release",
       "description": "Release build using Clang and LLVM libc++",
-      "inherits": [ "linux-clang", "release-base" ]
+      "inherits": [
+        "linux-clang",
+        "release-base"
+      ]
     },
     {
       "name": "linux-clang-debug",
       "displayName": "Linux Clang Debug",
       "description": "Debug build using Clang and LLVM libc++",
-      "inherits": [ "linux-clang", "debug-base" ]
+      "inherits": [
+        "linux-clang",
+        "debug-base"
+      ]
     },
     {
       "name": "linux-gcc-release",
       "displayName": "Linux GCC Release",
       "description": "Release build using GCC and libstdc++",
-      "inherits": [ "linux-gcc", "release-base" ]
+      "inherits": [
+        "linux-gcc",
+        "release-base"
+      ]
     },
     {
       "name": "linux-gcc-debug",
       "displayName": "Linux GCC Debug",
       "description": "Debug build using GCC and libstdc++",
-      "inherits": [ "linux-gcc", "debug-base" ]
+      "inherits": [
+        "linux-gcc",
+        "debug-base"
+      ]
+    },
+    {
+      "name": "windows-msvc-release",
+      "displayName": "MSVC Release",
+      "description": "Release build using MSVC native compilers",
+      "inherits": [
+        "default-msvc",
+        "release-base"
+      ]
+    },
+    {
+      "name": "windows-msvc-debug",
+      "displayName": "MSVC Debug",
+      "description": "Debug build using MSVC native compilers",
+      "inherits": [
+        "default-msvc",
+        "debug-base"
+      ]
     }
   ]
 }
