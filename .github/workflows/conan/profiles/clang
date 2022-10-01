@@ -7,3 +7,6 @@ compiler.libcxx=libc++
 compiler.version=14
 os=Linux
 os_build=Linux
+[env]
+CC=clang
+CXX=clang++
