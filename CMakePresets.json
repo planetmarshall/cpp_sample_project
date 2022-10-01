@@ -59,10 +59,6 @@
         "value": "x64",
         "strategy": "external"
       },
-      "cacheVariables": {
-        "CMAKE_C_COMPILER": "cl.exe",
-        "CMAKE_CXX_COMPILER": "cl.exe"
-      },
       "condition": {
         "type": "equals",
         "lhs": "${hostSystemName}",
@@ -75,6 +71,24 @@
             "Windows"
           ]
         }
+      }
+    },
+    {
+      "name": "msvc-cl-base",
+      "hidden": true,
+      "inherits": "default-msvc",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "cl.exe",
+        "CMAKE_CXX_COMPILER": "cl.exe"
+      }
+    },
+    {
+      "name": "msvc-clang-base",
+      "hidden": true,
+      "inherits": "default-msvc",
+      "cacheVariables": {
+        "CMAKE_C_COMPILER": "clang-cl.exe",
+        "CMAKE_CXX_COMPILER": "clang-cl.exe"
       }
     },
     {
@@ -132,7 +146,7 @@
       "displayName": "MSVC Release",
       "description": "Release build using MSVC native compilers",
       "inherits": [
-        "default-msvc",
+        "msvc-cl-base",
         "release-base"
       ]
     },
@@ -141,7 +155,25 @@
       "displayName": "MSVC Debug",
       "description": "Debug build using MSVC native compilers",
       "inherits": [
-        "default-msvc",
+        "msvc-cl-base",
+        "debug-base"
+      ]
+    },
+    {
+      "name": "windows-msvc-clang-release",
+      "displayName": "MSVC Clang Release",
+      "description": "Release build using the MSVC Clang toolset",
+      "inherits": [
+        "msvc-clang-base",
+        "release-base"
+      ]
+    },
+    {
+      "name": "windows-msvc-clang-debug",
+      "displayName": "MSVC Clang Debug",
+      "description": "Debug build using the MSVC Clang toolset",
+      "inherits": [
+        "msvc-clang-base",
         "debug-base"
       ]
     },

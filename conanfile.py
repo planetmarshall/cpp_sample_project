@@ -64,7 +64,10 @@ class CppSampleProjectConan(ConanFile):
         if self.settings.os == "Macos":
             return f"{str(self.settings.os)}-{str(self.settings.arch)}-clang-{str(self.settings.build_type)}"
         if microsoft.is_msvc(self):
-            return f"{str(self.settings.os)}-msvc-{str(self.settings.build_type)}"
+            if self.settings.get_safe("compiler.toolset") == "ClangCL":
+                return f"{str(self.settings.os)}-msvc-clang-{str(self.settings.build_type)}"
+            else:
+                return f"{str(self.settings.os)}-msvc-{str(self.settings.build_type)}"
         return f"{str(self.settings.os)}-{str(self.settings.compiler)}-{str(self.settings.build_type)}"
 
     def layout(self):
