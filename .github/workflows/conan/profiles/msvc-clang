@@ -8,5 +8,3 @@ compiler.toolset=ClangCL
 compiler.version=17
 os=Windows
 os_build=Windows
-[conf]
-tools.cmake.cmaketoolchain:generator = Ninja

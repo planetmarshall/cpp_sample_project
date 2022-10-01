@@ -6,9 +6,7 @@
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/${presetName}",
       "hidden": true,
-      "cacheVariables": {
-        "CMAKE_TOOLCHAIN_FILE": "${sourceDir}/build/${presetName}/generators/conan_toolchain.cmake"
-      }
+      "toolchainFile": "${sourceDir}/build/${presetName}/generators/conan_toolchain.cmake"
     },
     {
       "name": "macos-armv8-cross",
@@ -86,10 +84,8 @@
       "name": "msvc-clang-base",
       "hidden": true,
       "inherits": "default-msvc",
-      "cacheVariables": {
-        "CMAKE_C_COMPILER": "clang-cl.exe",
-        "CMAKE_CXX_COMPILER": "clang-cl.exe"
-      }
+      "generator": "Visual Studio 17 2022",
+      "toolset": "ClangCL"
     },
     {
       "name": "release-base",

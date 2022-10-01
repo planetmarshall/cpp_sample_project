@@ -110,7 +110,7 @@ jobs:
       - name: build with cmake
         run: |
           cd build/${PRESET}
-          cmake --build .
+          cmake --build . --config ${{ matrix.config }}
 
       - name: Run tests
         if: runner.os != 'macOS'
