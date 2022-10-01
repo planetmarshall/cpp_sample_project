@@ -2,7 +2,7 @@
 
 #include <range/v3/view/iota.hpp>
 #include <range/v3/view/filter.hpp>
-#include <range/v3/to_container.hpp>
+#include <range/v3/range/conversion.hpp>
 #include <range/v3/numeric/accumulate.hpp>
 
 namespace views = ranges::views;

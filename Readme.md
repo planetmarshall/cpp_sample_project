@@ -19,9 +19,6 @@ Supported Configurations
  * Visual Studio
  * Clang-CL
 
-
-
-
 Build System
 ------------
 
