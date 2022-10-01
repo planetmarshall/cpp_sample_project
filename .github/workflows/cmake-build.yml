@@ -17,7 +17,8 @@ jobs:
         name: [
           windows-msvc,
           linux-gcc,
-          linux-clang
+          linux-clang,
+          macos-arm64-clang
         ]
         config: [Release, Debug]
         shared: [shared, static]
