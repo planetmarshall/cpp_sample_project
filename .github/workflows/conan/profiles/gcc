@@ -8,5 +8,5 @@ compiler.version=11
 os=Linux
 os_build=Linux
 [env]
-CC=gcc
-CXX=g++
+CC=gcc-11
+CXX=g++-11
