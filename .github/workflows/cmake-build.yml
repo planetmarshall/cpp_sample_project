@@ -74,13 +74,22 @@ jobs:
           "
           conan lock create conanfile.py ${CONAN_ARGS} --lockfile-out conan.lock
 
-      - name: Get conan cache
+      - name: Get conan cache (Windows)
         uses: actions/cache@v2
         with:
           path: |
             ~/.conan/data
-            !~/.conan/data/**/conan_sources.tgz
+            C:/.conan
           key: conan-${{ hashFiles('conan.lock') }}
+        if: runner.os == 'Windows'
+
+      - name: Get conan cache
+        uses: actions/cache@v2
+        with:
+          path: |
+            ~/.conan/data/*
+          key: conan-${{ hashFiles('conan.lock') }}
+        if: runner.os != 'Windows'
 
       - name: Install dependencies with conan
         run: |
