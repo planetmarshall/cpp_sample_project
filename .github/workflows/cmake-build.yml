@@ -7,19 +7,19 @@ on:
   pull_request:
 
 jobs:
-  linux-build:
+  build:
     strategy:
       matrix:
-        os: [windows-latest, ubuntu-latest]
+        os: [windows-2022, ubuntu-22.04]
         shared: [shared, static]
         config: [Debug, Release]
         profile: [gcc, clang, msvc]
         exclude:
-          - os: windows-latest
+          - os: windows-2022
             profile: gcc
-          - os: windows-latest
+          - os: windows-2022
             profile: clang
-          - os: ubuntu-latest
+          - os: ubuntu-22.04
             profile: msvc
 
     runs-on: ${{ matrix.os }}
