@@ -14,13 +14,13 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [ubuntu-22.04]
-        shared: [shared, static]
-        config: [Debug, Release]
-        profile: [gcc, clang]
         include:
           - os: windows-2022
             profile: msvc
+        config: [Release, Debug]
+        shared: [shared, static]
+
+
 
     runs-on: ${{ matrix.os }}
 
