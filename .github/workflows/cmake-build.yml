@@ -16,6 +16,7 @@ jobs:
       matrix:
         name: [
           windows-msvc,
+          windows-msvc-clang,
           linux-gcc,
           linux-clang,
           macos-armv8-clang
@@ -26,6 +27,10 @@ jobs:
           - name: windows-msvc
             os: windows-2022
             profile: msvc
+          - name: windows-msvc-clang
+            os: windows-2022
+            profile: msvc-clang
+          - name: linux-gcc
           - name: linux-gcc
             os: ubuntu-22.04
             profile: gcc
