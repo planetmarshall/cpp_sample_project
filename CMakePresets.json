@@ -11,9 +11,10 @@
       }
     },
     {
-      "name": "macos-clang",
+      "name": "macos-armv8-cross",
       "inherits": "default-base",
       "cacheVariables": {
+        "CMAKE_SYSTEM_NAME": "Darwin",
         "CMAKE_SYSTEM_PROCESSOR": "armv8"
       },
       "hidden": true,
@@ -149,7 +150,7 @@
       "displayName": "MacOS Arm64 Clang Release",
       "description": "Release build using Apple Clang for Apple Silicon",
       "inherits": [
-        "macos-clang",
+        "macos-armv8-cross",
         "release-base"
       ]
     },
@@ -158,7 +159,7 @@
       "displayName": "MacOS Arm64 Clang Debug",
       "description": "Debug build using Apple Clang for Apple Silicon",
       "inherits": [
-        "macos-clang",
+        "macos-armv8-cross",
         "debug-base"
       ]
     }
