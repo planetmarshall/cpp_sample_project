@@ -6,6 +6,10 @@ on:
     - main
   pull_request:
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
   build:
     strategy:
@@ -13,13 +17,12 @@ jobs:
         os: [windows-2022, ubuntu-22.04]
         shared: [shared, static]
         config: [Debug, Release]
-        profile: [gcc, clang, msvc]
-        exclude:
-          - os: windows-2022
-            profile: gcc
-          - os: windows-2022
-            profile: clang
+        include:
           - os: ubuntu-22.04
+            profile: gcc
+          - os: ubuntu-22.04
+            profile: clang
+          - os: windows-2022
             profile: msvc
 
     runs-on: ${{ matrix.os }}
