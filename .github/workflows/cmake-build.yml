@@ -29,14 +29,16 @@ jobs:
       - name: Set environment variables
         run: |
           PRESET=${{ runner.os }}-${{ matrix.profile }}-${{ matrix.config }}
+          SHARED=$([[ "${{ matrix.shared }}" == "shared" ]] && echo "True" || echo "False")
           echo "PRESET=${PRESET}" | tr '[:upper:]' '[:lower:]' >> $GITHUB_ENV
+          echo "BUILD_SHARED=${SHARED}" >> $GITHUB_ENV
 
       - name: Create conan cache keys
         run: |
           CONAN_ARGS="
             --profile .github/workflows/conan/profiles/${{ matrix.profile }} \
             -s build_type=${{ matrix.config }} \
-            -o shared=${SAMPLE_SHARED} \
+            -o shared=${BUILD_SHARED} \
             --build missing
           "
           conan lock create conanfile.py ${CONAN_ARGS} --lockfile-out conan.lock
