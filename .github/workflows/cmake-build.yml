@@ -14,14 +14,11 @@ jobs:
   build:
     strategy:
       matrix:
-        os: [windows-2022, ubuntu-22.04]
+        os: [ubuntu-22.04]
         shared: [shared, static]
         config: [Debug, Release]
+        profile: [gcc, clang]
         include:
-          - os: ubuntu-22.04
-            profile: gcc
-          - os: ubuntu-22.04
-            profile: clang
           - os: windows-2022
             profile: msvc
 
@@ -41,6 +38,7 @@ jobs:
           pip install --upgrade \
             conan \
             ninja
+          conan config install .github/workflows/conan
 
       - name: Set environment variables
         run: |
@@ -52,7 +50,7 @@ jobs:
       - name: Create conan cache keys
         run: |
           CONAN_ARGS="
-            --profile .github/workflows/conan/profiles/${{ matrix.profile }} \
+            --profile ${{ matrix.profile }} \
             -s build_type=${{ matrix.config }} \
             -o shared=${BUILD_SHARED} \
             --build missing
