@@ -24,7 +24,9 @@ jobs:
 
       - name: install conan and config
         run: |
-          pip install conan --upgrade
+          pip install --upgrade \
+            conan \
+            ninja
 
       - name: Set environment variables
         run: |
