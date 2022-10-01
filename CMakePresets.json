@@ -11,6 +11,20 @@
       }
     },
     {
+      "name": "macos-armv8-cross",
+      "inherits": "default-base",
+      "cacheVariables": {
+        "CMAKE_SYSTEM_NAME": "Darwin",
+        "CMAKE_SYSTEM_PROCESSOR": "armv8"
+      },
+      "hidden": true,
+      "condition": {
+        "type": "equals",
+        "lhs": "${hostSystemName}",
+        "rhs": "Darwin"
+      }
+    },
+    {
       "name": "linux-clang",
       "inherits": "default-base",
       "cacheVariables": {
@@ -128,6 +142,24 @@
       "description": "Debug build using MSVC native compilers",
       "inherits": [
         "default-msvc",
+        "debug-base"
+      ]
+    },
+    {
+      "name": "macos-armv8-clang-release",
+      "displayName": "MacOS Arm64 Clang Release",
+      "description": "Release build using Apple Clang for Apple Silicon",
+      "inherits": [
+        "macos-armv8-cross",
+        "release-base"
+      ]
+    },
+    {
+      "name": "macos-armv8-clang-debug",
+      "displayName": "MacOS Arm64 Clang Debug",
+      "description": "Debug build using Apple Clang for Apple Silicon",
+      "inherits": [
+        "macos-armv8-cross",
         "debug-base"
       ]
     }

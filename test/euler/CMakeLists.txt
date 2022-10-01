@@ -11,4 +11,6 @@ target_link_libraries(test_euler
 include(CTest)
 include(Catch)
 
-catch_discover_tests(test_euler)
+if (NOT CMAKE_CROSSCOMPILING)
+	catch_discover_tests(test_euler)
+endif()

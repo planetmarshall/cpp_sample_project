@@ -17,7 +17,8 @@ jobs:
         name: [
           windows-msvc,
           linux-gcc,
-          linux-clang
+          linux-clang,
+          macos-armv8-clang
         ]
         config: [Release, Debug]
         shared: [shared, static]
@@ -31,6 +32,9 @@ jobs:
           - name: linux-clang
             os: ubuntu-22.04
             profile: clang
+          - name: macos-armv8-clang
+            os: macos-12
+            profile: macos-armv8-clang
 
     runs-on: ${{ matrix.os }}
 
@@ -53,6 +57,9 @@ jobs:
       - name: Set environment variables
         run: |
           PRESET=${{ runner.os }}-${{ matrix.profile }}-${{ matrix.config }}
+          if [[ "${{ runner.os }}" == "macOS" ]]; then
+            PRESET=${{ matrix.profile }}-${{ matrix.config }}
+          fi
           SHARED=$([[ "${{ matrix.shared }}" == "shared" ]] && echo "True" || echo "False")
           echo "PRESET=$(echo ${PRESET} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
           echo "BUILD_SHARED=${SHARED}" >> $GITHUB_ENV
@@ -67,13 +74,22 @@ jobs:
           "
           conan lock create conanfile.py ${CONAN_ARGS} --lockfile-out conan.lock
 
-      - name: Get conan cache
-        uses: actions/cache@v2
+      - name: Get conan cache (Windows)
+        uses: actions/cache@v3
         with:
           path: |
             ~/.conan/data
-            !~/.conan/data/**/conan_sources.tgz
+            C:/.conan
           key: conan-${{ hashFiles('conan.lock') }}
+        if: runner.os == 'Windows'
+
+      - name: Get conan cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.conan/data/*
+          key: conan-${{ hashFiles('conan.lock') }}
+        if: runner.os != 'Windows'
 
       - name: Install dependencies with conan
         run: |
@@ -92,6 +108,7 @@ jobs:
           cmake --build .
 
       - name: Run tests
+        if: runner.os != 'macOS'
         run: |
           cd build/${PRESET}
           ctest --extra-verbose --no-tests=error
