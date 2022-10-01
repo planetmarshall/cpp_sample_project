@@ -4,6 +4,9 @@ arch_build=x86_64
 build_type=Release
 compiler=clang
 compiler.libcxx=libc++
-compiler.version=12
-os=Macos
-os_build=Macos
+compiler.version=14
+os=Linux
+os_build=Linux
+[env]
+CC=clang
+CXX=clang++
