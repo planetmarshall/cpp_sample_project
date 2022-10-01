@@ -1,6 +1,8 @@
 Sample C++ Project
 ==================
 
+![build status](https://github.com/planetmarshall/cpp_sample_project/actions/workflows/cmake-build.yml/badge.svg)
+
 A sample startup project based on modern C++ guidelines
 
 Quick Start
@@ -18,9 +20,6 @@ Supported Configurations
 
  * Visual Studio
  * Clang-CL
-
-
-
 
 Build System
 ------------

@@ -6,18 +6,39 @@ on:
     - main
   pull_request:
 
+defaults:
+  run:
+    shell: bash
+
 jobs:
-  linux-build:
+  build:
     strategy:
       matrix:
+        name: [
+          windows-msvc,
+          linux-gcc,
+          linux-clang
+        ]
+        config: [Release, Debug]
         shared: [shared, static]
-        config: [Debug, Release]
-        profile: [gcc, clang]
+        include:
+          - name: windows-msvc
+            os: windows-2022
+            profile: msvc
+          - name: linux-gcc
+            os: ubuntu-22.04
+            profile: gcc
+          - name: linux-clang
+            os: ubuntu-22.04
+            profile: clang
 
-    runs-on: ubuntu-22.04
+    runs-on: ${{ matrix.os }}
 
     steps:
       - uses: actions/checkout@v2
+      - uses: ilammy/msvc-dev-cmd@v1
+        if: runner.os == 'Windows'
+
       - uses: actions/setup-python@v4
         with:
           python-version: '3.10'
@@ -27,6 +48,7 @@ jobs:
           pip install --upgrade \
             conan \
             ninja
+          conan config install .github/workflows/conan
 
       - name: Set environment variables
         run: |
@@ -38,7 +60,7 @@ jobs:
       - name: Create conan cache keys
         run: |
           CONAN_ARGS="
-            --profile .github/workflows/conan/profiles/${{ matrix.profile }} \
+            --profile ${{ matrix.profile }} \
             -s build_type=${{ matrix.config }} \
             -o shared=${BUILD_SHARED} \
             --build missing

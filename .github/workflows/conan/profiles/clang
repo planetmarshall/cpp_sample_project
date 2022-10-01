@@ -8,5 +8,5 @@ compiler.version=14
 os=Linux
 os_build=Linux
 [env]
-CC=clang
-CXX=clang++
+CC=clang-14
+CXX=clang++-14

@@ -3,6 +3,7 @@ import os
 from conan import ConanFile
 from conan.tools.cmake import CMake
 from conan.tools.layout import cmake_layout
+from conan.tools import microsoft
 
 
 class CppSampleProjectConan(ConanFile):
@@ -59,9 +60,15 @@ class CppSampleProjectConan(ConanFile):
             setattr(self.options["boost"], feature, disable)
 
     def layout(self):
-        build_folder_name = f"{str(self.settings.os)}-{str(self.settings.compiler)}-{str(self.settings.build_type)}"
+        compiler = "msvc" if microsoft.is_msvc(self) else str(self.settings.compiler)
+        build_folder_name = f"{str(self.settings.os)}-{compiler}-{str(self.settings.build_type)}"
         build_folder_path = os.path.join("build", build_folder_name.lower())
         cmake_layout(self, build_folder=build_folder_path)
+        self.folders.imports = os.path.join(build_folder_path, "bin")
+
+    def imports(self):
+        if microsoft.is_msvc(self):
+            self.copy("*.dll", src="bin")
 
     def config_options(self):
         if self.settings.os == "Windows":
