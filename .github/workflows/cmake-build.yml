@@ -108,6 +108,7 @@ jobs:
           cmake --build .
 
       - name: Run tests
+        if: runner.os != 'macOS'
         run: |
           cd build/${PRESET}
           ctest --extra-verbose --no-tests=error
