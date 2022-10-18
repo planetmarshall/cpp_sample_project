@@ -1,4 +1,4 @@
-name: Deploy sphinx documentation to Pages
+name: Generate Documentation
 
 on:
   push:
