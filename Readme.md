@@ -1,7 +1,8 @@
 Sample C++ Project
 ==================
 
-![build status](https://github.com/planetmarshall/cpp_sample_project/actions/workflows/cmake-build.yml/badge.svg)
+![build status](https://github.com/planetmarshall/cpp_sample_project/actions/workflows/build.yml/badge.svg)
+![docs status](https://github.com/planetmarshall/cpp_sample_project/actions/workflows/docs.yml/badge.svg)
 
 A sample startup project based on modern C++ guidelines
 

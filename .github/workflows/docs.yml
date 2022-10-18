@@ -3,7 +3,8 @@ name: Deploy sphinx documentation to Pages
 on:
   push:
     branches:
-    - sphinx-docs
+    - main
+  pull_request:
   workflow_dispatch:
 
 permissions:
@@ -41,6 +42,7 @@ jobs:
           path: doc/_site
 
   deploy:
+    if: github.ref_name == 'main'
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
