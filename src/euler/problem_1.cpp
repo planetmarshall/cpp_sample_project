@@ -5,7 +5,8 @@
 #include <range/v3/range/conversion.hpp>
 #include <range/v3/numeric/accumulate.hpp>
 
-namespace vies = ranges::views;
+
+namespace views = ranges::views;
 
 std::vector<int> euler::multiples_of_three_or_five(int max) {
   return  views::ints(3, max)
