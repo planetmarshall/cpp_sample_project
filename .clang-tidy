@@ -3,6 +3,7 @@ Checks: '
   clang-diagnostic-*,
   clang-analyzer-*,
   *,
+  -cert-*,
   -llvmlibc-*,
   -fuchsia-*,
   -modernize-use-trailing-return-type'
@@ -108,54 +109,6 @@ CheckOptions:
     value:           'true'
   - key:             bugprone-unused-return-value.CheckedFunctions
     value:           '::std::async;::std::launder;::std::remove;::std::remove_if;::std::unique;::std::unique_ptr::release;::std::basic_string::empty;::std::vector::empty;::std::back_inserter;::std::distance;::std::find;::std::find_if;::std::inserter;::std::lower_bound;::std::make_pair;::std::map::count;::std::map::find;::std::map::lower_bound;::std::multimap::equal_range;::std::multimap::upper_bound;::std::set::count;::std::set::find;::std::setfill;::std::setprecision;::std::setw;::std::upper_bound;::std::vector::at;::bsearch;::ferror;::feof;::isalnum;::isalpha;::isblank;::iscntrl;::isdigit;::isgraph;::islower;::isprint;::ispunct;::isspace;::isupper;::iswalnum;::iswprint;::iswspace;::isxdigit;::memchr;::memcmp;::strcmp;::strcoll;::strncmp;::strpbrk;::strrchr;::strspn;::strstr;::wcscmp;::access;::bind;::connect;::difftime;::dlsym;::fnmatch;::getaddrinfo;::getopt;::htonl;::htons;::iconv_open;::inet_addr;::isascii;::isatty;::mmap;::newlocale;::openat;::pathconf;::pthread_equal;::pthread_getspecific;::pthread_mutex_trylock;::readdir;::readlink;::recvmsg;::regexec;::scandir;::semget;::setjmp;::shm_open;::shmget;::sigismember;::strcasecmp;::strsignal;::ttyname'
-  - key:             cert-dcl16-c.IgnoreMacros
-    value:           'true'
-  - key:             cert-dcl16-c.NewSuffixes
-    value:           'L;LL;LU;LLU'
-  - key:             cert-dcl37-c.AggressiveDependentMemberLookup
-    value:           'false'
-  - key:             cert-dcl37-c.AllowedIdentifiers
-    value:           ''
-  - key:             cert-dcl37-c.Invert
-    value:           'false'
-  - key:             cert-dcl51-cpp.AggressiveDependentMemberLookup
-    value:           'false'
-  - key:             cert-dcl51-cpp.AllowedIdentifiers
-    value:           ''
-  - key:             cert-dcl51-cpp.Invert
-    value:           'false'
-  - key:             cert-dcl59-cpp.HeaderFileExtensions
-    value:           ';h;hh;hpp;hxx'
-  - key:             cert-err09-cpp.CheckThrowTemporaries
-    value:           'true'
-  - key:             cert-err09-cpp.MaxSize
-    value:           '-1'
-  - key:             cert-err09-cpp.WarnOnLargeObjects
-    value:           'false'
-  - key:             cert-err61-cpp.CheckThrowTemporaries
-    value:           'true'
-  - key:             cert-err61-cpp.MaxSize
-    value:           '-1'
-  - key:             cert-err61-cpp.WarnOnLargeObjects
-    value:           'false'
-  - key:             cert-msc32-c.DisallowedSeedTypes
-    value:           'time_t,std::time_t'
-  - key:             cert-msc51-cpp.DisallowedSeedTypes
-    value:           'time_t,std::time_t'
-  - key:             cert-oop11-cpp.IncludeStyle
-    value:           llvm
-  - key:             cert-oop54-cpp.WarnOnlyIfThisHasSuspiciousField
-    value:           'false'
-  - key:             cert-oop57-cpp.MemCmpNames
-    value:           ''
-  - key:             cert-oop57-cpp.MemCpyNames
-    value:           ''
-  - key:             cert-oop57-cpp.MemSetNames
-    value:           ''
-  - key:             cert-str34-c.CharTypdefsToIgnore
-    value:           ''
-  - key:             cert-str34-c.DiagnoseSignedUnsignedCharComparisons
-    value:           'false'
   - key:             cppcoreguidelines-avoid-magic-numbers.IgnoreAllFloatingPointValues
     value:           'false'
   - key:             cppcoreguidelines-avoid-magic-numbers.IgnoreBitFieldsWidths

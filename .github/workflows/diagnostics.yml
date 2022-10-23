@@ -59,6 +59,7 @@ jobs:
 
       - name: run clang-tidy
         run: |  
+          set -e
           TARGET="origin/main"
           if [[ -n "$GITHUB_BASE_REF" ]]; then
             TARGET="$GITHUB_BASE_REF"
@@ -70,5 +71,13 @@ jobs:
             exit 0
           fi
           
-          clang-tidy -p build/diagnostics \
-            ${CHANGES}
+          CLANG_TIDY_EXIT_CODE=0
+          clang-tidy \
+            -p build/diagnostics \
+            --header-filter='.*' \
+            --warnings-as-errors='*' \
+            ${CHANGES} || CLANG_TIDY_EXIT_CODE=$?
+          echo $CLANG_TIDY_EXIT_CODE
+          if [[ "$CLANG_TIDY_EXIT_CODE" -ne "0" ]]; then
+            echo "::warning ::clang-tidy warnings"
+          fi
