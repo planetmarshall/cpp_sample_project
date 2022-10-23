@@ -7,7 +7,7 @@ from git import Repo
 
 
 def all_files(compilation_database_file_name):
-    with open(compilation_database_file_name) as fp:
+    with open(compilation_database_file_name, "r") as fp:
         db = json.load(fp)
         for record in db:
             yield record["file"]
