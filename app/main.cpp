@@ -9,7 +9,7 @@ namespace po = boost::program_options;
 int main(int argc, char **argv) {
     po::options_description description("Project Euler Problem 1 <https://projecteuler.net/>");
     constexpr auto default_maximum = 100;
-    int maximum;
+    int maximum; //NOLINT(cppcoreguidelines-init-variables)
     description.add_options()
         ("help", "show help message")
         ("maximum", po::value<int>(&maximum)->default_value(default_maximum), "maximum number up to which to generate multiples of 3 and 5")
