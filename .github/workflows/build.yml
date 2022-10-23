@@ -31,7 +31,6 @@ jobs:
             os: windows-2022
             profile: msvc-clang
           - name: linux-gcc
-          - name: linux-gcc
             os: ubuntu-22.04
             profile: gcc
           - name: linux-clang
@@ -100,6 +99,7 @@ jobs:
         run: |
           conan install . \
             --install-folder build/${PRESET} \
+            --output-folder build/${PRESET} \
             --lockfile conan.lock \
             --build missing
 

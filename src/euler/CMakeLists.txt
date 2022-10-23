@@ -1,4 +1,9 @@
-add_library(euler problem_1.cpp)
+set(EULER_API_HEADERS ${CMAKE_SOURCE_DIR}/include/euler/euler.hpp)
+add_library(euler
+        problem_1.cpp
+        ${EULER_API_HEADERS}
+        )
+
 target_compile_features(euler PUBLIC cxx_std_20)
 set_target_properties(euler PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
 add_library(Euler::Euler ALIAS euler)

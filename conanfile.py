@@ -2,7 +2,7 @@ import os
 
 from conan import ConanFile
 from conan.tools.cmake import CMake
-from conan.tools.layout import cmake_layout
+from conan.tools.layout import basic_layout
 from conan.tools import microsoft, apple
 
 
@@ -10,7 +10,7 @@ class CppSampleProjectConan(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     options = {
         "fPIC": [True, False],
-        "shared": [True, False]
+        "shared": [True, False],
     }
     default_options = {
         "fPIC": True,
@@ -59,21 +59,9 @@ class CppSampleProjectConan(ConanFile):
             feature, disable = enable_feature(opt, val)
             setattr(self.options["boost"], feature, disable)
 
-    @property
-    def _build_folder_name(self):
-        if self.settings.os == "Macos":
-            return f"{str(self.settings.os)}-{str(self.settings.arch)}-clang-{str(self.settings.build_type)}"
-        if microsoft.is_msvc(self):
-            if self.settings.get_safe("compiler.toolset") == "ClangCL":
-                return f"{str(self.settings.os)}-msvc-clang-{str(self.settings.build_type)}"
-            else:
-                return f"{str(self.settings.os)}-msvc-{str(self.settings.build_type)}"
-        return f"{str(self.settings.os)}-{str(self.settings.compiler)}-{str(self.settings.build_type)}"
-
     def layout(self):
-        build_folder_path = os.path.join("build", self._build_folder_name.lower())
-        cmake_layout(self, build_folder=build_folder_path)
-        self.folders.imports = os.path.join(build_folder_path, "bin")
+        self.folders.generators = "conan"
+        self.folders.imports = "bin"
 
     def imports(self):
         if microsoft.is_msvc(self):
