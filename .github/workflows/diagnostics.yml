@@ -13,6 +13,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v2
+        with:
+          fetch-depth: 0
 
       - uses: actions/setup-python@v4
         with:
@@ -57,7 +59,7 @@ jobs:
 
       - name: run clang-tidy
         run: |  
-          TARGET="refs/heads/main"
+          TARGET="origin/main"
           if [[ -n "$GITHUB_BASE_REF" ]]; then
             TARGET="$GITHUB_BASE_REF"
             echo "GITHUB_BASE_REF=${GITHUB_BASE_REF}"
