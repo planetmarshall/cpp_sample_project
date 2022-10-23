@@ -6,7 +6,7 @@
       "generator": "Ninja",
       "binaryDir": "${sourceDir}/build/${presetName}",
       "hidden": true,
-      "toolchainFile": "${sourceDir}/build/${presetName}/generators/conan_toolchain.cmake"
+      "toolchainFile": "${sourceDir}/build/${presetName}/conan/conan_toolchain.cmake"
     },
     {
       "name": "macos-armv8-cross",
@@ -190,6 +190,18 @@
         "macos-armv8-cross",
         "debug-base"
       ]
+    },
+    {
+      "name": "diagnostics",
+      "displayName": "Clang Diagnostics",
+      "description": "Build for diagnostics",
+      "inherits": [
+        "linux-clang",
+        "release-base"
+      ],
+      "cacheVariables": {
+        "CMAKE_EXPORT_COMPILE_COMMANDS": "ON"
+      }
     }
   ]
 }
