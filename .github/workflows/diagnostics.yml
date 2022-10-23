@@ -60,12 +60,11 @@ jobs:
         run: |  
           TARGET="origin/main"
           if [[ -n "$GITHUB_BASE_REF" ]]; then
-            TARGET="$GITHUB_BASE_REF"
-            echo "GITHUB_BASE_REF=${GITHUB_BASE_REF}"
+            TARGET="origin/$GITHUB_BASE_REF"
           fi
           CHANGES=$(python scripts/changed_files.py build/diagnostics/compile_commands.json --target=${TARGET})
           if [[ -z "${CHANGES}" ]]; then
-            echo "::notice ::No changes"
+            echo "::notice ::No changes for static analysis"
             exit 0
           fi
           
