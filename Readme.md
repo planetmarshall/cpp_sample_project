@@ -1,6 +1,7 @@
 Sample C++ Project
 ==================
 
+![diagnostics status](https://github.com/planetmarshall/cpp_sample_project/actions/workflows/diagnostics.yml/badge.svg)
 ![build status](https://github.com/planetmarshall/cpp_sample_project/actions/workflows/build.yml/badge.svg)
 ![docs status](https://github.com/planetmarshall/cpp_sample_project/actions/workflows/docs.yml/badge.svg)
 
