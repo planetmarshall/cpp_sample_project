@@ -9,6 +9,8 @@ A sample startup project based on modern C++ guidelines. The example code
 implements a solution to the first problem on 
 [Project Euler](https://projecteuler.net/about)
 
+Automatically generated [documentation](https://planetmarshall.github.io/cpp_sample_project/)
+
 Quick Start
 -----------
 
@@ -73,3 +75,4 @@ References
 
  * [An introduction to modern CMake](https://cliutils.gitlab.io/modern-cmake/)
  * [Effective Modern CMake](https://gist.github.com/mbinna/c61dbb39bca0e4fb7d1f73b0d66a4fd1)
+ * [Jason Turner's](https://github.com/lefticus) [C++ Best Practices](https://leanpub.com/cppbestpractices)
