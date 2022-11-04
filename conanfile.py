@@ -1,8 +1,5 @@
-import os
-
 from conan import ConanFile
 from conan.tools.cmake import CMake
-from conan.tools.layout import basic_layout
 from conan.tools import microsoft, apple
 
 
@@ -77,10 +74,10 @@ class CppSampleProjectConan(ConanFile):
         self.set_boost_options()
 
     def requirements(self):
+        self.requires("boost/1.80.0")
         self.requires("range-v3/0.12.0")
 
     def build_requirements(self):
-        self.tool_requires("boost/1.80.0")
         self.tool_requires("catch2/3.1.0")
 
     def build(self):
