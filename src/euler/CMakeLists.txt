@@ -4,10 +4,8 @@ add_library(euler
         ${EULER_API_HEADERS}
         )
 
-target_compile_features(euler PUBLIC cxx_std_20)
 set_target_properties(euler PROPERTIES WINDOWS_EXPORT_ALL_SYMBOLS ON)
 add_library(Euler::Euler ALIAS euler)
-target_link_libraries(euler PRIVATE range-v3::range-v3)
 
 target_include_directories(
     euler

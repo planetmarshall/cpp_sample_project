@@ -5,19 +5,24 @@ on:
     branches:
       - main
   pull_request:
+    branches:
+      - main
 
 jobs:
   diagnostics:
     runs-on: ubuntu-22.04
 
+    env:
+      CONAN_HOME: "${{ github.workspace }}/conan"
+
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.12'
 
       - name: install conan and config
         run: |
@@ -25,36 +30,21 @@ jobs:
             GitPython \
             conan \
             ninja
+          conan profile detect
           conan config install .github/workflows/conan
-
-      - name: Create conan cache keys
-        run: |
-          CONAN_ARGS="
-            --profile clang \
-            --build missing
-          "
-          conan lock create conanfile.py ${CONAN_ARGS} --lockfile-out conan.lock
-
-      - name: Get conan cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.conan/data/*
-          key: conan-${{ hashFiles('conan.lock') }}
-
-      - name: Install dependencies with conan
-        run: |
-          conan install . \
-            --install-folder build/diagnostics \
-            --output-folder build/diagnostics \
-            --lockfile conan.lock \
-            --build missing
 
       - name: configure with cmake
         run: |
           cmake --preset diagnostics \
             -D CMAKE_C_COMPILER=$(realpath $(which clang)) \
             -D CMAKE_CXX_COMPILER=$(realpath $(which clang))++
+
+      - name: Setup conan cache
+        uses: actions/cache@v4
+        with:
+          key: diagnostics
+          path: ${{ env.CONAN_HOME }}/p
+          save-always: true
 
       - name: run clang-tidy
         run: |  
@@ -73,3 +63,8 @@ jobs:
             --header-filter='.*' \
             --warnings-as-errors='*' \
             ${CHANGES}
+
+      - name: clean conan cache
+        run: |
+          conan cache clean "*" --temp
+        if: always()

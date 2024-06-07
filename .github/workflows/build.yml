@@ -5,6 +5,8 @@ on:
     branches:
     - main
   pull_request:
+    branches:
+      - main
 
 defaults:
   run:
@@ -12,11 +14,13 @@ defaults:
 
 jobs:
   build:
+    env:
+      CONAN_HOME: "${{ github.workspace }}/conan"
     strategy:
       matrix:
         name: [
           windows-msvc,
-          windows-msvc-clang,
+          windows-clangcl,
           linux-gcc,
           linux-clang,
           macos-armv8-clang
@@ -27,7 +31,7 @@ jobs:
           - name: windows-msvc
             os: windows-2022
             profile: msvc
-          - name: windows-msvc-clang
+          - name: windows-clangcl
             os: windows-2022
             profile: msvc-clang
           - name: linux-gcc
@@ -37,71 +41,40 @@ jobs:
             os: ubuntu-22.04
             profile: clang
           - name: macos-armv8-clang
-            os: macos-12
+            os: macos-14
             profile: macos-armv8-clang
 
     runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: ilammy/msvc-dev-cmd@v1
         if: runner.os == 'Windows'
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.12'
 
       - name: install conan and config
         run: |
           pip install --upgrade \
             conan \
             ninja
+          conan profile detect
           conan config install .github/workflows/conan
 
       - name: Set environment variables
         run: |
-          PRESET=${{ runner.os }}-${{ matrix.profile }}-${{ matrix.config }}
-          if [[ "${{ runner.os }}" == "macOS" ]]; then
-            PRESET=${{ matrix.profile }}-${{ matrix.config }}
-          fi
+          PRESET=${{ matrix.name }}-${{ matrix.config }}
           SHARED=$([[ "${{ matrix.shared }}" == "shared" ]] && echo "True" || echo "False")
           echo "PRESET=$(echo ${PRESET} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
           echo "BUILD_SHARED=${SHARED}" >> $GITHUB_ENV
 
-      - name: Create conan cache keys
-        run: |
-          CONAN_ARGS="
-            --profile ${{ matrix.profile }} \
-            -s build_type=${{ matrix.config }} \
-            -o shared=${BUILD_SHARED} \
-            --build missing
-          "
-          conan lock create conanfile.py ${CONAN_ARGS} --lockfile-out conan.lock
-
-      - name: Get conan cache (Windows)
-        uses: actions/cache@v3
+      - name: Restore conan cache
+        uses: actions/cache/restore@v4
         with:
-          path: |
-            ~/.conan/data
-            C:/.conan
-          key: conan-${{ hashFiles('conan.lock') }}
-        if: runner.os == 'Windows'
-
-      - name: Get conan cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.conan/data/*
-          key: conan-${{ hashFiles('conan.lock') }}
-        if: runner.os != 'Windows'
-
-      - name: Install dependencies with conan
-        run: |
-          conan install . \
-            --install-folder build/${PRESET} \
-            --output-folder build/${PRESET} \
-            --lockfile conan.lock \
-            --build missing
+          key: ${{ env.PRESET }}
+          path: ${{ env.CONAN_HOME }}/p
 
       - name: configure with cmake
         run: |
@@ -113,7 +86,18 @@ jobs:
           cmake --build . --config ${{ matrix.config }}
 
       - name: Run tests
-        if: runner.os != 'macOS'
         run: |
           cd build/${PRESET}
           ctest --extra-verbose --no-tests=error
+
+      - name: clean conan cache
+        run: |
+          conan cache clean "*" --temp
+        if: always()
+
+      - name: Save conan cache
+        uses: actions/cache/save@v4
+        with:
+          key: ${{ env.PRESET }}
+          path: ${{ env.CONAN_HOME }}/p
+        if: always()
