@@ -70,12 +70,11 @@ jobs:
           echo "PRESET=$(echo ${PRESET} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
           echo "BUILD_SHARED=${SHARED}" >> $GITHUB_ENV
 
-      - name: Setup conan cache
-        uses: actions/cache@v4
+      - name: Restore conan cache
+        uses: actions/cache/restore@v4
         with:
           key: ${{ env.PRESET }}
           path: ${{ env.CONAN_USER_HOME }}/p
-          save-always: true
 
       - name: configure with cmake
         run: |
@@ -94,4 +93,11 @@ jobs:
       - name: clean conan cache
         run: |
           conan cache clean "*" --temp
+        if: always()
+
+      - name: Save conan cache
+        uses: actions/cache/save@v4
+        with:
+          key: ${{ env.PRESET }}
+          path: ${{ env.CONAN_USER_HOME }}/p
         if: always()
