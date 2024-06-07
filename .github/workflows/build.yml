@@ -15,7 +15,7 @@ defaults:
 jobs:
   build:
     env:
-      CONAN_USER_HOME: "${{ github.workspace }}/conan"
+      CONAN_HOME: "${{ github.workspace }}/conan"
     strategy:
       matrix:
         name: [

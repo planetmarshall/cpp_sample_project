@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-22.04
 
     env:
-      CONAN_USER_HOME: "${{ github.workspace }}/conan"
+      CONAN_HOME: "${{ github.workspace }}/conan"
 
     steps:
       - uses: actions/checkout@v4
