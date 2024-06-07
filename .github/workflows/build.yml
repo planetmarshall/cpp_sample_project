@@ -74,7 +74,7 @@ jobs:
         uses: actions/cache/restore@v4
         with:
           key: ${{ env.PRESET }}
-          path: ${{ env.CONAN_USER_HOME }}/p
+          path: ${{ env.CONAN_HOME }}/p
 
       - name: configure with cmake
         run: |
@@ -99,5 +99,5 @@ jobs:
         uses: actions/cache/save@v4
         with:
           key: ${{ env.PRESET }}
-          path: ${{ env.CONAN_USER_HOME }}/p
+          path: ${{ env.CONAN_HOME }}/p
         if: always()

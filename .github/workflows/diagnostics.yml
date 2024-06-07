@@ -43,7 +43,7 @@ jobs:
         uses: actions/cache@v4
         with:
           key: diagnostics
-          path: ${{ env.CONAN_USER_HOME }}/p
+          path: ${{ env.CONAN_HOME }}/p
           save-always: true
 
       - name: run clang-tidy
