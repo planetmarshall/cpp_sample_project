@@ -56,6 +56,7 @@ jobs:
           pip install --upgrade \
             conan \
             ninja
+          conan profile detect
           conan config install .github/workflows/conan
 
       - name: Set environment variables

@@ -25,6 +25,7 @@ jobs:
             GitPython \
             conan \
             ninja
+          conan profile detect
           conan config install .github/workflows/conan
 
       - name: configure with cmake
