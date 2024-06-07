@@ -6,4 +6,3 @@ compiler.runtime=MD
 compiler.toolset=ClangCL
 compiler.version=17
 os=Windows
-os_build=Windows

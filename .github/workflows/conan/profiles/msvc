@@ -5,7 +5,3 @@ compiler=Visual Studio
 compiler.runtime=MD
 compiler.version=17
 os=Windows
-[conf]
-tools.cmake.cmaketoolchain:generator = Ninja
-
-
