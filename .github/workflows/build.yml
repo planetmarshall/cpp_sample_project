@@ -65,10 +65,7 @@ jobs:
 
       - name: Set environment variables
         run: |
-          PRESET=${{ runner.os }}-${{ matrix.profile }}-${{ matrix.config }}
-          if [[ "${{ runner.os }}" == "macOS" ]]; then
-            PRESET=${{ matrix.profile }}-${{ matrix.config }}
-          fi
+          PRESET=${{ matrix.name }}-${{ matrix.config }}
           SHARED=$([[ "${{ matrix.shared }}" == "shared" ]] && echo "True" || echo "False")
           echo "PRESET=$(echo ${PRESET} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
           echo "BUILD_SHARED=${SHARED}" >> $GITHUB_ENV
@@ -90,7 +87,6 @@ jobs:
           cmake --build . --config ${{ matrix.config }}
 
       - name: Run tests
-        if: runner.os != 'macOS'
         run: |
           cd build/${PRESET}
           ctest --extra-verbose --no-tests=error
@@ -99,9 +95,3 @@ jobs:
         run: |
           conan cache clean "*" --temp
         if: always()
-
-      - name: Run tests
-        if: runner.os != 'macOS'
-        run: |
-          cd build/${PRESET}
-          ctest --extra-verbose --no-tests=error
