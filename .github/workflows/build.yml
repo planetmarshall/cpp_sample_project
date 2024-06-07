@@ -27,7 +27,7 @@ jobs:
           - name: windows-msvc
             os: windows-2022
             profile: msvc
-          - name: windows-msvc-clang
+          - name: windows-clangcl
             os: windows-2022
             profile: msvc-clang
           - name: linux-gcc
@@ -49,7 +49,7 @@ jobs:
 
       - uses: actions/setup-python@v4
         with:
-          python-version: '3.10'
+          python-version: '3.12'
 
       - name: install conan and config
         run: |
@@ -67,41 +67,6 @@ jobs:
           SHARED=$([[ "${{ matrix.shared }}" == "shared" ]] && echo "True" || echo "False")
           echo "PRESET=$(echo ${PRESET} | tr '[:upper:]' '[:lower:]')" >> $GITHUB_ENV
           echo "BUILD_SHARED=${SHARED}" >> $GITHUB_ENV
-
-      - name: Create conan cache keys
-        run: |
-          CONAN_ARGS="
-            --profile ${{ matrix.profile }} \
-            -s build_type=${{ matrix.config }} \
-            -o shared=${BUILD_SHARED} \
-            --build missing
-          "
-          conan lock create conanfile.py ${CONAN_ARGS} --lockfile-out conan.lock
-
-      - name: Get conan cache (Windows)
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.conan/data
-            C:/.conan
-          key: conan-${{ hashFiles('conan.lock') }}
-        if: runner.os == 'Windows'
-
-      - name: Get conan cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.conan/data/*
-          key: conan-${{ hashFiles('conan.lock') }}
-        if: runner.os != 'Windows'
-
-      - name: Install dependencies with conan
-        run: |
-          conan install . \
-            --install-folder build/${PRESET} \
-            --output-folder build/${PRESET} \
-            --lockfile conan.lock \
-            --build missing
 
       - name: configure with cmake
         run: |
