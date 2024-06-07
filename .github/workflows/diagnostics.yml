@@ -5,10 +5,15 @@ on:
     branches:
       - main
   pull_request:
+    branches:
+      - main
 
 jobs:
   diagnostics:
     runs-on: ubuntu-22.04
+
+    env:
+      CONAN_USER_HOME: "${{ github.workspace }}/conan"
 
     steps:
       - uses: actions/checkout@v4
@@ -34,6 +39,13 @@ jobs:
             -D CMAKE_C_COMPILER=$(realpath $(which clang)) \
             -D CMAKE_CXX_COMPILER=$(realpath $(which clang))++
 
+      - name: Setup conan cache
+        uses: actions/cache@v4
+        with:
+          key: diagnostics
+          path: ${{ env.CONAN_USER_HOME }}/p
+          save-always: true
+
       - name: run clang-tidy
         run: |  
           TARGET="origin/main"
@@ -51,3 +63,8 @@ jobs:
             --header-filter='.*' \
             --warnings-as-errors='*' \
             ${CHANGES}
+
+      - name: clean conan cache
+        run: |
+          conan cache clean "*" --temp
+        if: always()
