@@ -28,7 +28,7 @@
       "name": "macos-armv8",
       "inherits": "default-base",
       "cacheVariables": {
-        "CMAKE_OSX_ARCHITECTURES": "armv8",
+        "CMAKE_OSX_ARCHITECTURES": "arm64",
         "CONAN_HOST_PROFILE": "macos-armv8-clang"
       },
       "hidden": true,
