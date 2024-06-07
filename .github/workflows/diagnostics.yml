@@ -11,13 +11,13 @@ jobs:
     runs-on: ubuntu-22.04
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
-          python-version: '3.10'
+          python-version: '3.12'
 
       - name: install conan and config
         run: |
@@ -26,29 +26,6 @@ jobs:
             conan \
             ninja
           conan config install .github/workflows/conan
-
-      - name: Create conan cache keys
-        run: |
-          CONAN_ARGS="
-            --profile clang \
-            --build missing
-          "
-          conan lock create conanfile.py ${CONAN_ARGS} --lockfile-out conan.lock
-
-      - name: Get conan cache
-        uses: actions/cache@v3
-        with:
-          path: |
-            ~/.conan/data/*
-          key: conan-${{ hashFiles('conan.lock') }}
-
-      - name: Install dependencies with conan
-        run: |
-          conan install . \
-            --install-folder build/diagnostics \
-            --output-folder build/diagnostics \
-            --lockfile conan.lock \
-            --build missing
 
       - name: configure with cmake
         run: |

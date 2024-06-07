@@ -37,17 +37,17 @@ jobs:
             os: ubuntu-22.04
             profile: clang
           - name: macos-armv8-clang
-            os: macos-12
+            os: macos-14
             profile: macos-armv8-clang
 
     runs-on: ${{ matrix.os }}
 
     steps:
-      - uses: actions/checkout@v2
+      - uses: actions/checkout@v4
       - uses: ilammy/msvc-dev-cmd@v1
         if: runner.os == 'Windows'
 
-      - uses: actions/setup-python@v4
+      - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
 
