@@ -16,7 +16,7 @@ class CppSampleProjectConan(ConanFile):
     generators = "CMakeDeps"
 
     def requirements(self):
-        self.requires("boost/1.85.0")
+        self.requires("cli11/2.4.2")
 
     def build_requirements(self):
         self.test_requires("catch2/3.6.0")

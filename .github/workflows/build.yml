@@ -73,7 +73,7 @@ jobs:
       - name: Restore conan cache
         uses: actions/cache/restore@v4
         with:
-          key: ${{ env.PRESET }}
+          key: "${{ env.PRESET }}-${{ matrix.shared }}"
           path: ${{ env.CONAN_HOME }}/p
 
       - name: configure with cmake
@@ -98,6 +98,6 @@ jobs:
       - name: Save conan cache
         uses: actions/cache/save@v4
         with:
-          key: ${{ env.PRESET }}
+          key: "${{ env.PRESET }}-${{ matrix.shared }}"
           path: ${{ env.CONAN_HOME }}/p
         if: always()

@@ -17,8 +17,8 @@ else()
     endif()
 endif()
 
-find_package(Boost REQUIRED COMPONENTS program_options)
-
+find_package(CLI11 REQUIRED)
+set_property(GLOBAL PROPERTY CTEST_TARGETS_ADDED 1)
 enable_testing()
 find_package(Catch2 REQUIRED)
 
