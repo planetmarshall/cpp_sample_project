@@ -19,17 +19,12 @@ Quick Start
    $ git clone https://github.com/planetmarshall/cpp_sample_project.git
    $ cd cpp_sample_project
    ```
-2. Install conan
+2. Install [conan](https://docs.conan.io/2/) for dependency management
    ``` 
    pip install conan --upgrade
+   conan profile detect
    ```
-3. Install dependencies. The preset name should match the preset you will use 
-   with CMake. Check the `CMakePresets.json` file for the available presets
-   or add your own.
-   ```
-   $ conan install . -if build/<preset> -of build/<preset> --build missing
-   ```
-4. Configure with CMake
+3. Configure with CMake. Conan is invoked automatically using [cmake-conan](https://github.com/conan-io/cmake-conan)
    ```
    $ cmake --preset <preset>
    ```
@@ -55,7 +50,7 @@ GCC and Clang, `/W4 /fpermissive-` for MSVC) and warnings are treated as errors.
 ### Linux
 
  * GCC
- * Clang with LLVM libc++
+ * Clang with GNU stdlibc++
 
 ### Windows
 
